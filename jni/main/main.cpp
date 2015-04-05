@@ -44,6 +44,9 @@
 #define MAIN_TITLE          "MMDAgent - Toolkit for building voice interaction systems"
 #define MAIN_DOUBLECLICKSEC 0.2
 
+#define LOG_TAG "MMDA-main"
+#include <android/log.h>
+
 /* headers */
 
 #ifdef _WIN32
@@ -347,6 +350,7 @@ int commonMain(int argc, char **argv)
    /* create MMDAgent window */
    mmdagent = new MMDAgent();
    if(mmdagent->setup(argc, argv, MAIN_TITLE) == false) {
+      __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "fail to setup MMDAagent");
       delete mmdagent;
       glfwTerminate();
       return -1;
@@ -371,10 +375,12 @@ int commonMain(int argc, char **argv)
    glfwSetMouseWheelCallback(procMouseWheelMessage);
 
    /* main loop */
+   __android_log_print(ANDROID_LOG_INFO, LOG_TAG, "--- Start Main Roop ---");
    enable = true;
    while(enable == true && glfwGetWindowParam(GLFW_OPENED) == GL_TRUE) {
       mmdagent->updateAndRender();
    }
+   __android_log_print(ANDROID_LOG_INFO, LOG_TAG, "--- End Main Roop ---");
 
    /* free */
    mmdagent->procWindowDestroyMessage();
