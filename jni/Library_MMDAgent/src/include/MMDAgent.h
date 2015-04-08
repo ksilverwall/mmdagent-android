@@ -139,284 +139,152 @@ class MMDAgent;
 #include "Plugin.h"
 #include "MotionStocker.h"
 
-/* MMDAgent: MMDAgent class */
 class MMDAgent
 {
 private:
    bool m_enable;
 
-   char *m_configFileName; /* config file name */
-   char *m_configDirName;  /* directory name of config file */
-   char *m_appDirName;     /* directory name of application data */
+   char *m_configFileName;
+   char *m_configDirName;
+   char *m_appDirName;
 
-   Option *m_option;        /* user options */
-   ScreenWindow *m_screen;  /* screen window */
-   Message *m_message;      /* message queue */
-   BulletPhysics *m_bullet; /* Bullet Physics */
-   Plugin *m_plugin;        /* plugins */
-   Stage *m_stage;          /* stage */
-   SystemTexture *m_systex; /* system texture */
-   LipSync *m_lipSync;      /* system default lipsync */
-   Render *m_render;        /* render */
-   Timer *m_timer;          /* timer */
-   TextRenderer *m_text;    /* text render */
-   LogText *m_logger;       /* logger */
+   Option *m_option;
+   ScreenWindow *m_screen;
+   Message *m_message;
+   BulletPhysics *m_bullet;
+   Plugin *m_plugin;
+   Stage *m_stage;
+   SystemTexture *m_systex;
+   LipSync *m_lipSync;
+   Render *m_render;
+   Timer *m_timer;
+   TextRenderer *m_text;
+   LogText *m_logger;
 
-   PMDObject *m_model;      /* models */
-   int *m_renderOrder;      /* model rendering order */
-   int m_numModel;          /* number of models */
-   MotionStocker *m_motion; /* motions */
+   PMDObject *m_model;
+   int *m_renderOrder;
+   int m_numModel;
+   MotionStocker *m_motion;
 
-   CameraController m_camera; /* camera controller */
-   bool m_cameraControlled;   /* true when camera is controlled by motion */
+   CameraController m_camera;
+   bool m_cameraControlled;
 
-   bool m_keyCtrl;           /* true if Ctrl-key is on */
-   bool m_keyShift;          /* true if Shift-key is on */
-   int m_selectedModel;      /* model ID selected by mouse */
+   bool m_keyCtrl;
+   bool m_keyShift;
+   int m_selectedModel;
    int m_highLightingModel;
-   bool m_doubleClicked;     /* true if double clicked */
+   bool m_doubleClicked;
    int m_mousePosX;
    int m_mousePosY;
    bool m_leftButtonPressed;
    double m_restFrame;
 
-   bool m_enablePhysicsSimulation; /* true if physics simulation is on */
-   bool m_dispLog;                 /* true if log window is shown */
-   bool m_dispBulletBodyFlag;      /* true if bullet body is shown */
-   bool m_dispModelDebug;          /* true if model debugger is on */
-   bool m_holdMotion;              /* true if holding motion */
+   bool m_enablePhysicsSimulation;
+   bool m_dispLog;
+   bool m_dispBulletBodyFlag;
+   bool m_dispModelDebug;
+   bool m_holdMotion;
 
-   /* getNewModelId: return new model ID */
+   //----------------------------------------
+
    int getNewModelId();
 
-   /* removeRelatedModels: delete a model */
    void removeRelatedModels(int modelId);
 
-   /* updateLight: update light */
    void updateLight();
-
-   /* setHighLight: set high-light of selected model */
    void setHighLight(int modelId);
 
-   /* updateScene: update the whole scene */
    bool updateScene();
-
-   /* renderScene: render the whole scene */
    bool renderScene();
 
-   /* addModel: add model */
    bool addModel(const char *modelAlias, const char *fileName, btVector3 *pos, btQuaternion *rot, bool useCartoonRendering, const char *baseModelAlias, const char *baseBoneName);
-
-   /* changeModel: change model */
    bool changeModel(const char *modelAlias, const char *fileName);
-
-   /* deleteModel: delete model */
    bool deleteModel(const char *modelAlias);
 
-   /* addMotion: add motion */
    bool addMotion(const char *modelAlias, const char *motionAlias, const char *fileName, bool full, bool once, bool enableSmooth, bool enableRePos, float priority);
-
-   /* changeMotion: change motion */
    bool changeMotion(const char *modelAlias, const char *motionAlias, const char *fileName);
-
-   /* accelerateMotion: accelerate motion */
    bool accelerateMotion(const char *modelAlias, const char *motionAlias, float speed, float durationTime, float targetTime);
-
-   /* deleteMotion: delete motion */
    bool deleteMotion(const char *modelAlias, const char *motionAlias);
 
-   /* startMove: start moving */
    bool startMove(const char *modelAlias, btVector3 *pos, bool local, float speed);
-
-   /* stopMove: stop moving */
    bool stopMove(const char *modelAlias);
 
-   /* startTurn: start turn */
    bool startTurn(const char *modelAlias, btVector3 *pos, bool local, float speed);
-
-   /* stopTurn: stop turn */
    bool stopTurn(const char *modelAlias);
 
-   /* startRotation: start rotation */
    bool startRotation(const char *modelAlias, btQuaternion *rot, bool local, float spped);
-
-   /* stopRotation: stop rotation */
    bool stopRotation(const char *modelAlias);
 
-   /* setFloor: set floor image */
    bool setFloor(const char *fileName);
-
-   /* setBackground: set background image */
    bool setBackground(const char *fileName);
-
-   /* setStage: set stage */
    bool setStage(const char *fileName);
 
-   /* changeCamera: change camera setting */
    bool changeCamera(const char *pos, const char *rot, const char *distance, const char *fovy, const char *time);
-
-   /* changeLightColor: change light color */
    bool changeLightColor(float r, float g, float b);
-
-   /* changeLightDirection: change light direction */
    bool changeLightDirection(float x, float y, float z);
 
-   /* startLipSync: start lip sync */
    bool startLipSync(const char *modelAlias, const char *seq);
-
-   /* stopLipSync: stop lip sync */
    bool stopLipSync(const char *modelAlias);
 
-   /* procReceivedMessage: process received message */
    void procReceivedMessage(const char *type, const char *value);
-
-   /* procReceivedLogString: process received log string */
    void procReceivedLogString(const char *log);
 
-   /* initialize: initialize MMDAgent */
    void initialize();
-
-   /* clear: free MMDAgent */
    void clear();
 
 public:
 
-   /* MMDAgent: constructor */
    MMDAgent();
-
-   /* ~MMDAgent: destructor */
    ~MMDAgent();
 
-   /* setup: initialize and setup MMDAgent */
    bool setup(int argc, char **argv, const char *title);
-
-   /* updateAndRender: update and render the whole scene */
    bool updateAndRender();
-
-   /* drawString: draw string */
    void drawString(const char *str);
-
-   /* resetAdjustmentTimer: reset adjustment timer */
    void resetAdjustmentTimer();
 
-   /* sendMessage: send message to global message queue */
    void sendMessage(const char *type, const char *format, ...);
-
-   /* sendLogString: send log string */
    void sendLogString(const char *format, ...);
-
-   /* findModelAlias: find a model with the specified alias */
    int findModelAlias(const char *alias);
 
-   /* getMoelList: get model list */
    PMDObject *getModelList();
-
-   /* getNumModel: get number of models */
    short getNumModel();
-
-   /* getMousePosition:: get mouse position */
    void getMousePosition(int *x, int *y);
-
-   /* getScreenPointPosition: convert screen position to object position */
    void getScreenPointPosition(btVector3 *dst, btVector3 *src);
-
-   /* MMDAgent::getWindowSize: get window size */
    void getWindowSize(int *w, int *h);
-
-   /* getConfigFileName: get config file name for plugin */
    char *getConfigFileName();
-
-   /* getConfigDirName: get directory of config file for plugin */
    char *getConfigDirName();
-
-   /* getAppDirName: get application directory name for plugin */
    char *getAppDirName();
 
-   /* procWindowDestroyMessage: process window destroy message */
+   //==============================
+   //  Message Process Interface
    void procWindowDestroyMessage();
-
-   /* procMouseLeftButtonDoubleClickMessage: process mouse left button double click message */
    void procMouseLeftButtonDoubleClickMessage(int x, int y);
-
-   /* procMouseLeftButtonDownMessage: process mouse left button down message */
    void procMouseLeftButtonDownMessage(int x, int y, bool withCtrl, bool withShift);
-
-   /* procMouseLeftButtonUpMessage: process mouse left button up message */
    void procMouseLeftButtonUpMessage();
-
-   /* procMouseWheel: process mouse wheel message */
    void procMouseWheelMessage(bool zoomup, bool withCtrl, bool withShift);
-
-   /* procMousePosMessage: process mouse position message */
    void procMousePosMessage(int x, int y, bool withCtrl, bool withShift);
-
-   /* procMouseRightButtonDownMessage: process mouse right button down message */
    void procMouseRightButtonDownMessage();
-
-   /* procFullScreenMessage: process full screen message */
    void procFullScreenMessage();
-
-   /* procInfoStringMessage: process information string message */
    void procInfoStringMessage();
-
-   /* procVSyncMessage: process vsync message */
    void procVSyncMessage();
-
-   /* procShadowMappingMessage: process shadow mapping message */
    void procShadowMappingMessage();
-
-   /* procShadowMappingOrderMessage: process shadow mapping order message */
    void procShadowMappingOrderMessage();
-
-   /* procDisplayRigidBodyMessage: process display rigid body message */
    void procDisplayRigidBodyMessage();
-
-   /* procDisplayWireMessage: process display wire message */
    void procDisplayWireMessage();
-
-   /* procDisplayBoneMessage: process display bone message */
    void procDisplayBoneMessage();
-
-   /* procCartoonEdgeMessage: process cartoon edge message */
    void procCartoonEdgeMessage(bool plus);
-
-   /* procTimeAdjustMessage: process time adjust message */
    void procTimeAdjustMessage(bool plus);
-
-   /* procHorizontalRotateMessage: process horizontal rotate message */
    void procHorizontalRotateMessage(bool right);
-
-   /* procVerticalRotateMessage: process vertical rotate message */
    void procVerticalRotateMessage(bool up);
-
-   /* procHorizontalMoveMessage: process horizontal move message */
    void procHorizontalMoveMessage(bool right);
-
-   /* procVerticalMoveMessage: process vertical move message */
    void procVerticalMoveMessage(bool up);
-
-   /* procDeleteModelMessage: process delete model message */
    void procDeleteModelMessage();
-
-   /* procPhysicsMessage: process physics message */
    void procPhysicsMessage();
-
-   /* procDisplayLogMessage: process display log message */
    void procDisplayLogMessage();
-
-   /* procHoldMessage: process hold message */
    void procHoldMessage();
-
-   /* procWindowSizeMessage: process window size message */
    void procWindowSizeMessage(int x, int y);
-
-   /* procKeyMessage: process key message */
    void procKeyMessage(char c);
-
-   /* procScrollLogMessage: process log scroll message */
    void procScrollLogMessage(bool up);
-
-   /* procDropFileMessage: process file drops message */
    void procDropFileMessage(const char *file, int x, int y);
 };
 
