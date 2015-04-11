@@ -19,7 +19,7 @@ LOCAL_SRC_FILES  := src/lib/BoneController.cpp \
                     src/lib/TextRenderer.cpp \
                     src/lib/TileTexture.cpp \
                     src/lib/Timer.cpp
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/include \
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/src/include \
                     $(LOCAL_PATH)/../Library_JPEG/include \
                     $(LOCAL_PATH)/../Library_Bullet_Physics/include \
                     $(LOCAL_PATH)/../Library_GLee/include \

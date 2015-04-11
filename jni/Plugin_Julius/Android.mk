@@ -8,7 +8,7 @@ LOCAL_SRC_FILES        := Plugin_Julius.cpp \
                           Julius_Thread.cpp
 LOCAL_LDLIBS           := -landroid -lEGL -lGLESv1_CM -lOpenSLES
 LOCAL_STATIC_LIBRARIES := MMDAgent MMDFiles Bullet_Physics JPEG libpng GLFW GLee Julius PortAudio zlib
-LOCAL_C_INCLUDES       := $(LOCAL_PATH)/../Library_MMDAgent/include \
+LOCAL_C_INCLUDES       := $(INCLUDE_PATH_MMDAGENT) \
                           $(LOCAL_PATH)/../Library_JPEG/include \
                           $(LOCAL_PATH)/../Library_Bullet_Physics/include \
                           $(LOCAL_PATH)/../Library_GLee/include \

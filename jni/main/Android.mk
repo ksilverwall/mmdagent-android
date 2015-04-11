@@ -12,7 +12,7 @@ LOCAL_C_INCLUDES       := $(LOCAL_PATH)/../Library_JPEG/include \
                           $(LOCAL_PATH)/../Library_libpng/include \
                           $(LOCAL_PATH)/../Library_zlib/include \
                           $(LOCAL_PATH)/../Library_MMDFiles/include \
-                          $(LOCAL_PATH)/../Library_MMDAgent/include \
+                          $(LOCAL_PATH)/../Library_MMDAgent/src/include \
                           $(LOCAL_PATH)/../Library_GLFW/include
 LOCAL_CFLAGS           += -DMMDAGENT
 
