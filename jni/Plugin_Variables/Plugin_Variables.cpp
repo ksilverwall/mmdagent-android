@@ -83,7 +83,7 @@ EXPORT void extProcMessage(MMDAgent *mmdagent, const char *type, const char *arg
    char *buff, *p1, *p2, *p3, *save;
 
    if(enable == true) {
-      if(MMDAgent_strequal(type, MMDAGENT_COMMAND_PLUGINDISABLE)) {
+      if(MMDAgent_strequal(type, MMDAgent::Command::PLUGINDISABLE.c_str())) {
          if(MMDAgent_strequal(args, PLUGINVARIABLES_NAME)) {
             enable = false;
             mmdagent->sendMessage(MMDAGENT_EVENT_PLUGINDISABLE, "%s", PLUGINVARIABLES_NAME);
@@ -125,7 +125,7 @@ EXPORT void extProcMessage(MMDAgent *mmdagent, const char *type, const char *arg
          countdown_thread.unset(args);
       }
    } else {
-      if(MMDAgent_strequal(type, MMDAGENT_COMMAND_PLUGINENABLE)) {
+      if(MMDAgent_strequal(type, MMDAgent::Command::PLUGINENABLE.c_str())) {
          if(MMDAgent_strequal(args, PLUGINVARIABLES_NAME)) {
             enable = true;
             mmdagent->sendMessage(MMDAGENT_EVENT_PLUGINENABLE, "%s", PLUGINVARIABLES_NAME);

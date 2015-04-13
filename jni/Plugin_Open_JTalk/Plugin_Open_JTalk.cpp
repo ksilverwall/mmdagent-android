@@ -114,7 +114,7 @@ EXPORT void extAppStart(MMDAgent *mmdagent)
 EXPORT void extProcMessage(MMDAgent *mmdagent, const char *type, const char *args)
 {
    if(enable == true) {
-      if(MMDAgent_strequal(type, MMDAGENT_COMMAND_PLUGINDISABLE)) {
+      if(MMDAgent_strequal(type, MMDAgent::Command::PLUGINDISABLE.c_str())) {
          if(MMDAgent_strequal(args, PLUGINOPENJTALK_NAME)) {
             enable = false;
             mmdagent->sendMessage(MMDAGENT_EVENT_PLUGINDISABLE, "%s", PLUGINOPENJTALK_NAME);
@@ -127,7 +127,7 @@ EXPORT void extProcMessage(MMDAgent *mmdagent, const char *type, const char *arg
          }
       }
    } else {
-      if(MMDAgent_strequal(type, MMDAGENT_COMMAND_PLUGINENABLE)) {
+      if(MMDAgent_strequal(type, MMDAgent::Command::PLUGINENABLE.c_str())) {
          if(MMDAgent_strequal(args, PLUGINOPENJTALK_NAME)) {
             enable = true;
             mmdagent->sendMessage(MMDAGENT_EVENT_PLUGINENABLE, "%s", PLUGINOPENJTALK_NAME);
