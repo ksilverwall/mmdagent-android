@@ -72,28 +72,6 @@
 #define MMDAGENT_PLUGINDIR(binaryDirName) "%s%c%s", binaryDirName, MMDAGENT_DIRSEPARATOR, "Plugins"
 #endif /* MMDAGENT_OVERWRITEPLUGINDIR */
 
-#define MMDAGENT_COMMAND_MODELADD         "MODEL_ADD"
-#define MMDAGENT_COMMAND_MODELCHANGE      "MODEL_CHANGE"
-#define MMDAGENT_COMMAND_MODELDELETE      "MODEL_DELETE"
-#define MMDAGENT_COMMAND_MOTIONADD        "MOTION_ADD"
-#define MMDAGENT_COMMAND_MOTIONCHANGE     "MOTION_CHANGE"
-#define MMDAGENT_COMMAND_MOTIONACCELERATE "MOTION_ACCELERATE"
-#define MMDAGENT_COMMAND_MOTIONDELETE     "MOTION_DELETE"
-#define MMDAGENT_COMMAND_MOVESTART        "MOVE_START"
-#define MMDAGENT_COMMAND_MOVESTOP         "MOVE_STOP"
-#define MMDAGENT_COMMAND_TURNSTART        "TURN_START"
-#define MMDAGENT_COMMAND_TURNSTOP         "TURN_STOP"
-#define MMDAGENT_COMMAND_ROTATESTART      "ROTATE_START"
-#define MMDAGENT_COMMAND_ROTATESTOP       "ROTATE_STOP"
-#define MMDAGENT_COMMAND_STAGE            "STAGE"
-#define MMDAGENT_COMMAND_LIGHTCOLOR       "LIGHTCOLOR"
-#define MMDAGENT_COMMAND_LIGHTDIRECTION   "LIGHTDIRECTION"
-#define MMDAGENT_COMMAND_LIPSYNCSTART     "LIPSYNC_START"
-#define MMDAGENT_COMMAND_LIPSYNCSTOP      "LIPSYNC_STOP"
-#define MMDAGENT_COMMAND_CAMERA           "CAMERA"
-#define MMDAGENT_COMMAND_PLUGINENABLE     "PLUGIN_ENABLE"
-#define MMDAGENT_COMMAND_PLUGINDISABLE    "PLUGIN_DISABLE"
-
 #define MMDAGENT_EVENT_MODELADD         "MODEL_EVENT_ADD"
 #define MMDAGENT_EVENT_MODELCHANGE      "MODEL_EVENT_CHANGE"
 #define MMDAGENT_EVENT_MODELDELETE      "MODEL_EVENT_DELETE"
@@ -115,6 +93,7 @@
 #define MMDAGENT_EVENT_KEY              "KEY"
 
 /* headers */
+#include <string>
 
 #include "MMDFiles.h"
 
@@ -233,6 +212,30 @@ private:
    void clear();
 
 public:
+
+   struct Command {
+      static const std::string MODELADD;
+      static const std::string MODELCHANGE;
+      static const std::string MODELDELETE;
+      static const std::string MOTIONADD;
+      static const std::string MOTIONCHANGE;
+      static const std::string MOTIONACCELERATE;
+      static const std::string MOTIONDELETE;
+      static const std::string MOVESTART;
+      static const std::string MOVESTOP;
+      static const std::string TURNSTART;
+      static const std::string TURNSTOP;
+      static const std::string ROTATESTART;
+      static const std::string ROTATESTOP;
+      static const std::string STAGE;
+      static const std::string LIGHTCOLOR;
+      static const std::string LIGHTDIRECTION;
+      static const std::string LIPSYNCSTART;
+      static const std::string LIPSYNCSTOP;
+      static const std::string CAMERA;
+      static const std::string PLUGINENABLE;
+      static const std::string PLUGINDISABLE;
+   };
 
    MMDAgent();
    ~MMDAgent();

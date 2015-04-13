@@ -39,11 +39,30 @@
 /* POSSIBILITY OF SUCH DAMAGE.                                       */
 /* ----------------------------------------------------------------- */
 
-/* headers */
-
-#include <stdarg.h>
 #include <locale.h>
 #include "MMDAgent.h"
+
+const std::string MMDAgent::Command::MODELADD         = "MODEL_ADD";
+const std::string MMDAgent::Command::MODELCHANGE      = "MODEL_CHANGE";
+const std::string MMDAgent::Command::MODELDELETE      = "MODEL_DELETE";
+const std::string MMDAgent::Command::MOTIONADD        = "MOTION_ADD";
+const std::string MMDAgent::Command::MOTIONCHANGE     = "MOTION_CHANGE";
+const std::string MMDAgent::Command::MOTIONACCELERATE = "MOTION_ACCELERATE";
+const std::string MMDAgent::Command::MOTIONDELETE     = "MOTION_DELETE";
+const std::string MMDAgent::Command::MOVESTART        = "MOVE_START";
+const std::string MMDAgent::Command::MOVESTOP         = "MOVE_STOP";
+const std::string MMDAgent::Command::TURNSTART        = "TURN_START";
+const std::string MMDAgent::Command::TURNSTOP         = "TURN_STOP";
+const std::string MMDAgent::Command::ROTATESTART      = "ROTATE_START";
+const std::string MMDAgent::Command::ROTATESTOP       = "ROTATE_STOP";
+const std::string MMDAgent::Command::STAGE            = "STAGE";
+const std::string MMDAgent::Command::LIGHTCOLOR       = "LIGHTCOLOR";
+const std::string MMDAgent::Command::LIGHTDIRECTION   = "LIGHTDIRECTION";
+const std::string MMDAgent::Command::LIPSYNCSTART     = "LIPSYNC_START";
+const std::string MMDAgent::Command::LIPSYNCSTOP      = "LIPSYNC_STOP";
+const std::string MMDAgent::Command::CAMERA           = "CAMERA";
+const std::string MMDAgent::Command::PLUGINENABLE     = "PLUGIN_ENABLE";
+const std::string MMDAgent::Command::PLUGINDISABLE    = "PLUGIN_DISABLE";
 
 /* MMDAgent::getNewModelId: return new model ID */
 int MMDAgent::getNewModelId()
@@ -2132,7 +2151,7 @@ void MMDAgent::procReceivedMessage(const char *type, const char *value)
       }
    }
 
-   if (MMDAgent_strequal(type, MMDAGENT_COMMAND_MODELADD)) {
+   if (MMDAgent_strequal(type, MMDAgent::Command::MODELADD.c_str())) {
       bool1 = true;
       str1 = NULL;
       str2 = NULL;
@@ -2173,21 +2192,21 @@ void MMDAgent::procReceivedMessage(const char *type, const char *value)
          str2 = argv[6];
       }
       addModel(argv[0], argv[1], &pos, &rot, bool1, str1, str2);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_MODELCHANGE)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::MODELCHANGE.c_str())) {
       /* change model */
       if (num != 2) {
          m_logger->log("Error: %s: number of arguments should be 2.", type);
          return;
       }
       changeModel(argv[0], argv[1]);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_MODELDELETE)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::MODELDELETE.c_str())) {
       /* delete model */
       if (num != 1) {
          m_logger->log("Error: %s: number of arguments should be 1.", type);
          return;
       }
       deleteModel(argv[0]);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_MOTIONADD)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::MOTIONADD.c_str())) {
       /* add motion */
       bool1 = true; /* full */
       bool2 = true; /* once */
@@ -2242,14 +2261,14 @@ void MMDAgent::procReceivedMessage(const char *type, const char *value)
          f = MMDAgent_str2float(argv[7]);
       }
       addMotion(argv[0], argv[1], argv[2], bool1, bool2, bool3, bool4, f);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_MOTIONCHANGE)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::MOTIONCHANGE.c_str())) {
       /* change motion */
       if (num != 3) {
          m_logger->log("Error: %s: number of arguments should be 3.", type);
          return;
       }
       changeMotion(argv[0], argv[1], argv[2]);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_MOTIONACCELERATE)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::MOTIONACCELERATE.c_str())) {
       /* accelerate motion */
       fvec[0] = 0.0f;  /* speed */
       fvec[1] = 0.0f;  /* duration time in sec */
@@ -2265,14 +2284,14 @@ void MMDAgent::procReceivedMessage(const char *type, const char *value)
       if (num >= 5)
          fvec[2] = MMDAgent_str2float(argv[4]);
       accelerateMotion(argv[0], argv[1], fvec[0], fvec[1], fvec[2]);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_MOTIONDELETE)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::MOTIONDELETE.c_str())) {
       /* delete motion */
       if (num != 2) {
          m_logger->log("Error: %s: number of arguments should be 2.", type);
          return;
       }
       deleteMotion(argv[0], argv[1]);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_MOVESTART)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::MOVESTART.c_str())) {
       /* start moving */
       bool1 = false;
       f = -1.0;
@@ -2297,14 +2316,14 @@ void MMDAgent::procReceivedMessage(const char *type, const char *value)
       if (num >= 4)
          f = MMDAgent_str2float(argv[3]);
       startMove(argv[0], &pos, bool1, f);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_MOVESTOP)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::MOVESTOP.c_str())) {
       /* stop moving */
       if (num != 1) {
          m_logger->log("Error: %s: number of arguments should be 1.", type);
          return;
       }
       stopMove(argv[0]);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_ROTATESTART)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::ROTATESTART.c_str())) {
       /* start rotation */
       bool1 = false;
       f = -1.0;
@@ -2329,14 +2348,14 @@ void MMDAgent::procReceivedMessage(const char *type, const char *value)
       if (num >= 4)
          f = MMDAgent_str2float(argv[3]);
       startRotation(argv[0], &rot, bool1, f);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_ROTATESTOP)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::ROTATESTOP.c_str())) {
       /* stop rotation */
       if (num != 1) {
          m_logger->log("Error: %s: number of arguments should be 1.", type);
          return;
       }
       stopRotation(argv[0]);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_TURNSTART)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::TURNSTART.c_str())) {
       /* turn start */
       bool1 = false;
       f = -1.0;
@@ -2361,14 +2380,14 @@ void MMDAgent::procReceivedMessage(const char *type, const char *value)
       if (num >= 4)
          f = MMDAgent_str2float(argv[3]);
       startTurn(argv[0], &pos, bool1, f);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_TURNSTOP)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::TURNSTOP.c_str())) {
       /* stop turn */
       if (num != 1) {
          m_logger->log("Error: %s: number of arguments should be 1.", type);
          return;
       }
       stopTurn(argv[0]);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_STAGE)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::STAGE.c_str())) {
       /* change stage */
       if (num != 1) {
          m_logger->log("Error: %s: number of arguments should be 1.", type);
@@ -2383,7 +2402,7 @@ void MMDAgent::procReceivedMessage(const char *type, const char *value)
          setFloor(str1);
          setBackground(str2);
       }
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_CAMERA)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::CAMERA.c_str())) {
       /* camera */
       if((num < 4 || num > 5) && num != 1) {
          m_logger->log("Error: %s: number of arguments should be 1 or 4-5.", type);
@@ -2394,7 +2413,7 @@ void MMDAgent::procReceivedMessage(const char *type, const char *value)
       } else {
          changeCamera(argv[0], argv[1], argv[2], argv[3], (num == 5) ? argv[4] : NULL);
       }
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_LIGHTCOLOR)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::LIGHTCOLOR.c_str())) {
       /* change light color */
       if (num != 1) {
          m_logger->log("Error: %s: number of arguments should be 1.", type);
@@ -2405,7 +2424,7 @@ void MMDAgent::procReceivedMessage(const char *type, const char *value)
          return;
       }
       changeLightColor(fvec[0], fvec[1], fvec[2]);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_LIGHTDIRECTION)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::LIGHTDIRECTION.c_str())) {
       /* change light direction */
       if (num != 1) {
          m_logger->log("Error: %s: number of arguments should be 1.", type);
@@ -2416,14 +2435,14 @@ void MMDAgent::procReceivedMessage(const char *type, const char *value)
          return;
       }
       changeLightDirection(fvec[0], fvec[1], fvec[2]);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_LIPSYNCSTART)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::LIPSYNCSTART.c_str())) {
       /* start lip sync */
       if (num != 2) {
          m_logger->log("Error: %s: number of arguments should be 2.", type);
          return;
       }
       startLipSync(argv[0], argv[1]);
-   } else if (MMDAgent_strequal(type, MMDAGENT_COMMAND_LIPSYNCSTOP)) {
+   } else if (MMDAgent_strequal(type, MMDAgent::Command::LIPSYNCSTOP.c_str())) {
       /* stop lip sync */
       if (num != 1) {
          m_logger->log("Error: %s: number of arguments should be 1.", type);
