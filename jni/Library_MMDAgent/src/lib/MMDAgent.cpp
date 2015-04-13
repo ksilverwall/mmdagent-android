@@ -64,6 +64,26 @@ const std::string MMDAgent::Command::CAMERA           = "CAMERA";
 const std::string MMDAgent::Command::PLUGINENABLE     = "PLUGIN_ENABLE";
 const std::string MMDAgent::Command::PLUGINDISABLE    = "PLUGIN_DISABLE";
 
+const std::string MMDAgent::Event::MODELADD         = "MODEL_EVENT_ADD";
+const std::string MMDAgent::Event::MODELCHANGE      = "MODEL_EVENT_CHANGE";
+const std::string MMDAgent::Event::MODELDELETE      = "MODEL_EVENT_DELETE";
+const std::string MMDAgent::Event::MOTIONADD        = "MOTION_EVENT_ADD";
+const std::string MMDAgent::Event::MOTIONCHANGE     = "MOTION_EVENT_CHANGE";
+const std::string MMDAgent::Event::MOTIONACCELERATE = "MOTION_EVENT_ACCELERATE";
+const std::string MMDAgent::Event::MOTIONDELETE     = "MOTION_EVENT_DELETE";
+const std::string MMDAgent::Event::MOVESTART        = "MOVE_EVENT_START";
+const std::string MMDAgent::Event::MOVESTOP         = "MOVE_EVENT_STOP";
+const std::string MMDAgent::Event::TURNSTART        = "TURN_EVENT_START";
+const std::string MMDAgent::Event::TURNSTOP         = "TURN_EVENT_STOP";
+const std::string MMDAgent::Event::ROTATESTART      = "ROTATE_EVENT_START";
+const std::string MMDAgent::Event::ROTATESTOP       = "ROTATE_EVENT_STOP";
+const std::string MMDAgent::Event::LIPSYNCSTART     = "LIPSYNC_EVENT_START";
+const std::string MMDAgent::Event::LIPSYNCSTOP      = "LIPSYNC_EVENT_STOP";
+const std::string MMDAgent::Event::PLUGINENABLE     = "PLUGIN_EVENT_ENABLE";
+const std::string MMDAgent::Event::PLUGINDISABLE    = "PLUGIN_EVENT_DISABLE";
+const std::string MMDAgent::Event::DRAGANDDROP      = "DRAGANDDROP";
+const std::string MMDAgent::Event::KEY              = "KEY";
+
 /* MMDAgent::getNewModelId: return new model ID */
 int MMDAgent::getNewModelId()
 {
@@ -98,16 +118,16 @@ void MMDAgent::removeRelatedModels(int modelId)
    for (motionPlayer = m_model[modelId].getMotionManager()->getMotionPlayerList(); motionPlayer; motionPlayer = motionPlayer->next) {
       /* send message */
       if (MMDAgent_strequal(motionPlayer->name, LIPSYNC_MOTIONNAME))
-         sendMessage(MMDAGENT_EVENT_LIPSYNCSTOP, "%s", m_model[modelId].getAlias());
+         sendMessage(MMDAgent::Event::LIPSYNCSTOP.c_str(), "%s", m_model[modelId].getAlias());
       else {
-         sendMessage(MMDAGENT_EVENT_MOTIONDELETE, "%s|%s", m_model[modelId].getAlias(), motionPlayer->name);
+         sendMessage(MMDAgent::Event::MOTIONDELETE.c_str(), "%s|%s", m_model[modelId].getAlias(), motionPlayer->name);
       }
       /* unload from motion stocker */
       m_motion->unload(motionPlayer->vmd);
    }
 
    /* remove model */
-   sendMessage(MMDAGENT_EVENT_MODELDELETE, "%s", m_model[modelId].getAlias());
+   sendMessage(MMDAgent::Event::MODELDELETE.c_str(), "%s", m_model[modelId].getAlias());
    m_model[modelId].release();
 }
 
@@ -244,7 +264,7 @@ bool MMDAgent::addModel(const char *modelAlias, const char *fileName, btVector3 
    m_model[id].updateSkin();
 
    /* send message */
-   sendMessage(MMDAGENT_EVENT_MODELADD, "%s", name);
+   sendMessage(MMDAgent::Event::MODELADD.c_str(), "%s", name);
    free(name);
    return true;
 }
@@ -297,7 +317,7 @@ bool MMDAgent::changeModel(const char *modelAlias, const char *fileName)
          removeRelatedModels(i);
 
    /* send message */
-   sendMessage(MMDAGENT_EVENT_MODELCHANGE, "%s", modelAlias);
+   sendMessage(MMDAgent::Event::MODELCHANGE.c_str(), "%s", modelAlias);
    return true;
 }
 
@@ -389,7 +409,7 @@ bool MMDAgent::addMotion(const char *modelAlias, const char *motionAlias, const 
       return false;
    }
 
-   sendMessage(MMDAGENT_EVENT_MOTIONADD, "%s|%s", modelAlias, name);
+   sendMessage(MMDAgent::Event::MOTIONADD.c_str(), "%s|%s", modelAlias, name);
    free(name);
    return true;
 }
@@ -447,8 +467,7 @@ bool MMDAgent::changeMotion(const char *modelAlias, const char *motionAlias, con
    /* unload old motion from motion stocker */
    m_motion->unload(old);
 
-   /* send message */
-   sendMessage(MMDAGENT_EVENT_MOTIONCHANGE, "%s|%s", modelAlias, motionAlias);
+   sendMessage(MMDAgent::Event::MOTIONCHANGE.c_str(), "%s|%s", modelAlias, motionAlias);
    return true;
 }
 
@@ -519,7 +538,7 @@ bool MMDAgent::startMove(const char *modelAlias, btVector3 *pos, bool local, flo
    }
 
    if(m_model[id].isMoving() == true)
-      sendMessage(MMDAGENT_EVENT_MOVESTOP, "%s", modelAlias);
+      sendMessage(MMDAgent::Event::MOVESTOP.c_str(), "%s", modelAlias);
 
    /* get */
    m_model[id].getCurrentPosition(&currentPos);
@@ -534,14 +553,14 @@ bool MMDAgent::startMove(const char *modelAlias, btVector3 *pos, bool local, flo
 
    /* not need to start */
    if (currentPos == targetPos) {
-      sendMessage(MMDAGENT_EVENT_MOVESTART, "%s", modelAlias);
-      sendMessage(MMDAGENT_EVENT_MOVESTOP, "%s", modelAlias);
+      sendMessage(MMDAgent::Event::MOVESTART.c_str(), "%s", modelAlias);
+      sendMessage(MMDAgent::Event::MOVESTOP.c_str(), "%s", modelAlias);
       return true;
    }
 
    m_model[id].setMoveSpeed(speed);
    m_model[id].setPosition(&targetPos);
-   sendMessage(MMDAGENT_EVENT_MOVESTART, "%s", modelAlias);
+   sendMessage(MMDAgent::Event::MOVESTART.c_str(), "%s", modelAlias);
    return true;
 }
 
@@ -567,7 +586,7 @@ bool MMDAgent::stopMove(const char *modelAlias)
    m_model[id].getCurrentPosition(&currentPos);
 
    m_model[id].setPosition(&currentPos);
-   sendMessage(MMDAGENT_EVENT_MOVESTOP, "%s", modelAlias);
+   sendMessage(MMDAgent::Event::MOVESTOP.c_str(), "%s", modelAlias);
    return true;
 }
 
@@ -592,9 +611,9 @@ bool MMDAgent::startTurn(const char *modelAlias, btVector3 *pos, bool local, flo
 
    if(m_model[id].isRotating() == true) {
       if(m_model[id].isTurning() == true)
-         sendMessage(MMDAGENT_EVENT_TURNSTOP, "%s", modelAlias);
+         sendMessage(MMDAgent::Event::TURNSTOP.c_str(), "%s", modelAlias);
       else
-         sendMessage(MMDAGENT_EVENT_ROTATESTOP, "%s", modelAlias);
+         sendMessage(MMDAgent::Event::ROTATESTOP.c_str(), "%s", modelAlias);
    }
 
    /* get */
@@ -629,15 +648,15 @@ bool MMDAgent::startTurn(const char *modelAlias, btVector3 *pos, bool local, flo
 
    /* not need to turn */
    if (currentRot == targetRot) {
-      sendMessage(MMDAGENT_EVENT_TURNSTART, "%s", modelAlias);
-      sendMessage(MMDAGENT_EVENT_TURNSTOP, "%s", modelAlias);
+      sendMessage(MMDAgent::Event::TURNSTART.c_str(), "%s", modelAlias);
+      sendMessage(MMDAgent::Event::TURNSTOP.c_str(), "%s", modelAlias);
       return true;
    }
 
    m_model[id].setSpinSpeed(speed);
    m_model[id].setRotation(&targetRot);
    m_model[id].setTurningFlag(true);
-   sendMessage(MMDAGENT_EVENT_TURNSTART, "%s", modelAlias);
+   sendMessage(MMDAgent::Event::TURNSTART.c_str(), "%s", modelAlias);
    return true;
 }
 
@@ -663,7 +682,7 @@ bool MMDAgent::stopTurn(const char *modelAlias)
    m_model[id].getCurrentRotation(&currentRot);
 
    m_model[id].setRotation(&currentRot);
-   sendMessage(MMDAGENT_EVENT_TURNSTOP, "%s", modelAlias);
+   sendMessage(MMDAgent::Event::TURNSTOP.c_str(), "%s", modelAlias);
    return true;
 }
 
@@ -682,9 +701,9 @@ bool MMDAgent::startRotation(const char *modelAlias, btQuaternion *rot, bool loc
 
    if(m_model[id].isRotating() == true) {
       if(m_model[id].isTurning() == true)
-         sendMessage(MMDAGENT_EVENT_TURNSTOP, "%s", modelAlias);
+         sendMessage(MMDAgent::Event::TURNSTOP.c_str(), "%s", modelAlias);
       else
-         sendMessage(MMDAGENT_EVENT_ROTATESTOP, "%s", modelAlias);
+         sendMessage(MMDAgent::Event::ROTATESTOP.c_str(), "%s", modelAlias);
    }
 
    /* get */
@@ -699,15 +718,15 @@ bool MMDAgent::startRotation(const char *modelAlias, btQuaternion *rot, bool loc
 
    /* not need to start */
    if (currentRot == targetRot) {
-      sendMessage(MMDAGENT_EVENT_ROTATESTART, "%s", modelAlias);
-      sendMessage(MMDAGENT_EVENT_ROTATESTOP, "%s", modelAlias);
+      sendMessage(MMDAgent::Event::ROTATESTART.c_str(), "%s", modelAlias);
+      sendMessage(MMDAgent::Event::ROTATESTOP.c_str(), "%s", modelAlias);
       return true;
    }
 
    m_model[id].setSpinSpeed(speed);
    m_model[id].setRotation(&targetRot);
    m_model[id].setTurningFlag(false);
-   sendMessage(MMDAGENT_EVENT_ROTATESTART, "%s", modelAlias);
+   sendMessage(MMDAgent::Event::ROTATESTART.c_str(), "%s", modelAlias);
    return true;
 }
 
@@ -733,7 +752,7 @@ bool MMDAgent::stopRotation(const char *modelAlias)
    m_model[id].getCurrentRotation(&currentRot);
 
    m_model[id].setRotation(&currentRot);
-   sendMessage(MMDAGENT_EVENT_ROTATESTOP, "%s", modelAlias);
+   sendMessage(MMDAgent::Event::ROTATESTOP.c_str(), "%s", modelAlias);
    return true;
 }
 
@@ -873,7 +892,7 @@ bool MMDAgent::startLipSync(const char *modelAlias, const char *seq)
          m_motion->unload(vmd);
          return false;
       }
-      sendMessage(MMDAGENT_EVENT_LIPSYNCSTOP, "%s", modelAlias);
+      sendMessage(MMDAgent::Event::LIPSYNCSTOP.c_str(), "%s", modelAlias);
    } else {
       if (m_model[id].startMotion(vmd, LIPSYNC_MOTIONNAME, false, true, true, true, m_option->getLipsyncPriority()) == false) {
          m_logger->log("Error: startLipSync: lip sync cannot be started.");
@@ -883,7 +902,7 @@ bool MMDAgent::startLipSync(const char *modelAlias, const char *seq)
    }
 
    /* send message */
-   sendMessage(MMDAGENT_EVENT_LIPSYNCSTART, "%s", modelAlias);
+   sendMessage(MMDAgent::Event::LIPSYNCSTART.c_str(), "%s", modelAlias);
    return true;
 }
 
@@ -1278,7 +1297,7 @@ bool MMDAgent::updateScene()
             for (motionPlayer = m_model[i].getMotionManager()->getMotionPlayerList(); motionPlayer; motionPlayer = motionPlayer->next) {
                if (motionPlayer->accelerationStatusFlag == ACCELERATION_STATUS_ENDED) {
                   /* send message */
-                  sendMessage(MMDAGENT_EVENT_MOTIONACCELERATE, "%s|%s", m_model[i].getAlias(), motionPlayer->name);
+                  sendMessage(MMDAgent::Event::MOTIONACCELERATE.c_str(), "%s|%s", m_model[i].getAlias(), motionPlayer->name);
                }
             }
          }
@@ -1299,9 +1318,9 @@ bool MMDAgent::updateScene()
                if (motionPlayer->statusFlag == MOTION_STATUS_DELETED) {
                   /* send message */
                   if (MMDAgent_strequal(motionPlayer->name, LIPSYNC_MOTIONNAME))
-                     sendMessage(MMDAGENT_EVENT_LIPSYNCSTOP, "%s", m_model[i].getAlias());
+                     sendMessage(MMDAgent::Event::LIPSYNCSTOP.c_str(), "%s", m_model[i].getAlias());
                   else {
-                     sendMessage(MMDAGENT_EVENT_MOTIONDELETE, "%s|%s", m_model[i].getAlias(), motionPlayer->name);
+                     sendMessage(MMDAgent::Event::MOTIONDELETE.c_str(), "%s|%s", m_model[i].getAlias(), motionPlayer->name);
                   }
                   /* unload from motion stocker */
                   m_motion->unload(motionPlayer->vmd);
@@ -1371,13 +1390,13 @@ bool MMDAgent::renderScene()
    for (i = 0; i < m_numModel; i++) {
       if (m_model[i].isEnable() == true) {
          if (m_model[i].updateModelRootOffset(fps))
-            sendMessage(MMDAGENT_EVENT_MOVESTOP, "%s", m_model[i].getAlias());
+            sendMessage(MMDAgent::Event::MOVESTOP.c_str(), "%s", m_model[i].getAlias());
          if (m_model[i].updateModelRootRotation(fps)) {
             if (m_model[i].isTurning()) {
-               sendMessage(MMDAGENT_EVENT_TURNSTOP, "%s", m_model[i].getAlias());
+               sendMessage(MMDAgent::Event::TURNSTOP.c_str(), "%s", m_model[i].getAlias());
                m_model[i].setTurningFlag(false);
             } else {
-               sendMessage(MMDAGENT_EVENT_ROTATESTOP, "%s", m_model[i].getAlias());
+               sendMessage(MMDAgent::Event::ROTATESTOP.c_str(), "%s", m_model[i].getAlias());
             }
          }
       }
@@ -2108,7 +2127,7 @@ void MMDAgent::procKeyMessage(char c)
    if(m_enable == false)
       return;
 
-   sendMessage(MMDAGENT_EVENT_KEY, "%C", c);
+   sendMessage(MMDAgent::Event::KEY.c_str(), "%C", c);
 }
 
 /* MMDAgent::procReceivedMessage: process received message */
@@ -2488,7 +2507,7 @@ void MMDAgent::procDropFileMessage(const char * file, int x, int y)
    if(MMDAgent_strlen(file) <= 0)
       return;
 
-   sendMessage(MMDAGENT_EVENT_DRAGANDDROP, "%s|%d|%d", file, x, y);
+   sendMessage(MMDAgent::Event::DRAGANDDROP.c_str(), "%s|%d|%d", file, x, y);
 
    if (MMDAgent_strtailmatch(file, ".vmd") || MMDAgent_strtailmatch(file, ".VMD")) {
       dropAllowedModelID = -1;

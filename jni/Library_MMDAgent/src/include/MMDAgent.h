@@ -72,26 +72,6 @@
 #define MMDAGENT_PLUGINDIR(binaryDirName) "%s%c%s", binaryDirName, MMDAGENT_DIRSEPARATOR, "Plugins"
 #endif /* MMDAGENT_OVERWRITEPLUGINDIR */
 
-#define MMDAGENT_EVENT_MODELADD         "MODEL_EVENT_ADD"
-#define MMDAGENT_EVENT_MODELCHANGE      "MODEL_EVENT_CHANGE"
-#define MMDAGENT_EVENT_MODELDELETE      "MODEL_EVENT_DELETE"
-#define MMDAGENT_EVENT_MOTIONADD        "MOTION_EVENT_ADD"
-#define MMDAGENT_EVENT_MOTIONCHANGE     "MOTION_EVENT_CHANGE"
-#define MMDAGENT_EVENT_MOTIONACCELERATE "MOTION_EVENT_ACCELERATE"
-#define MMDAGENT_EVENT_MOTIONDELETE     "MOTION_EVENT_DELETE"
-#define MMDAGENT_EVENT_MOVESTART        "MOVE_EVENT_START"
-#define MMDAGENT_EVENT_MOVESTOP         "MOVE_EVENT_STOP"
-#define MMDAGENT_EVENT_TURNSTART        "TURN_EVENT_START"
-#define MMDAGENT_EVENT_TURNSTOP         "TURN_EVENT_STOP"
-#define MMDAGENT_EVENT_ROTATESTART      "ROTATE_EVENT_START"
-#define MMDAGENT_EVENT_ROTATESTOP       "ROTATE_EVENT_STOP"
-#define MMDAGENT_EVENT_LIPSYNCSTART     "LIPSYNC_EVENT_START"
-#define MMDAGENT_EVENT_LIPSYNCSTOP      "LIPSYNC_EVENT_STOP"
-#define MMDAGENT_EVENT_PLUGINENABLE     "PLUGIN_EVENT_ENABLE"
-#define MMDAGENT_EVENT_PLUGINDISABLE    "PLUGIN_EVENT_DISABLE"
-#define MMDAGENT_EVENT_DRAGANDDROP      "DRAGANDDROP"
-#define MMDAGENT_EVENT_KEY              "KEY"
-
 /* headers */
 #include <string>
 
@@ -235,6 +215,27 @@ public:
       static const std::string CAMERA;
       static const std::string PLUGINENABLE;
       static const std::string PLUGINDISABLE;
+   };
+   struct Event {
+      static const std::string MODELADD;
+      static const std::string MODELCHANGE;
+      static const std::string MODELDELETE;
+      static const std::string MOTIONADD;
+      static const std::string MOTIONCHANGE;
+      static const std::string MOTIONACCELERATE;
+      static const std::string MOTIONDELETE;
+      static const std::string MOVESTART;
+      static const std::string MOVESTOP;
+      static const std::string TURNSTART;
+      static const std::string TURNSTOP;
+      static const std::string ROTATESTART;
+      static const std::string ROTATESTOP;
+      static const std::string LIPSYNCSTART;
+      static const std::string LIPSYNCSTOP;
+      static const std::string PLUGINENABLE;
+      static const std::string PLUGINDISABLE;
+      static const std::string DRAGANDDROP;
+      static const std::string KEY;
    };
 
    MMDAgent();
