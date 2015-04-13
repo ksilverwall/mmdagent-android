@@ -1126,7 +1126,7 @@ bool MMDAgent::setup(int argc, char **argv, const char *title)
 
    /* setup lipsync */
    m_lipSync = new LipSync();
-   sprintf(buff, "%s%c%s", m_appDirName, MMDAGENT_DIRSEPARATOR, LIPSYNC_CONFIGFILE);
+   sprintf(buff, "%s%c%s", m_appDirName, DIRSEPARATOR, LIPSYNC_CONFIGFILE);
    if (m_lipSync->load(buff) == false) {
       clear();
       return 0;

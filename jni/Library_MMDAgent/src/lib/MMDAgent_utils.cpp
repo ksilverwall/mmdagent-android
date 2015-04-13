@@ -438,7 +438,7 @@ DIRECTORY *MMDAgent_opendir(const char *name)
    if(MMDAgent_strlen(name) <= 0) {
       strcpy(name2, "*");
    } else {
-      sprintf(name2, "%s%c*", name, MMDAGENT_DIRSEPARATOR);
+      sprintf(name2, "%s%c*", name, MMDAgent::DIRSEPARATOR);
    }
    dir->find = FindFirstFileA(name2, (WIN32_FIND_DATAA *) dir->data);
    dir->first = true;

@@ -44,8 +44,6 @@
 
 /* definitions */
 
-#define MMDAGENT_DIRSEPARATOR MMDFILES_DIRSEPARATOR
-
 #ifdef MMDAGENT_OVERWRITEEXEFILE
 #define MMDAGENT_EXEFILE(binaryFileName) "%s", MMDAGENT_OVERWRITEEXEFILE
 #else
@@ -191,8 +189,10 @@ private:
 
 public:
 
+   static const char DIRSEPARATOR = MMDFILES_DIRSEPARATOR;
    static const unsigned int MAXBUFLEN   = MMDFILES_MAXBUFLEN;
    static const unsigned int MAXNCOMMAND = 10;
+
    struct Command {
       static const std::string MODELADD;
       static const std::string MODELCHANGE;
