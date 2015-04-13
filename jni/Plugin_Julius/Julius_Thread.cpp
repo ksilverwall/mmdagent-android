@@ -60,7 +60,7 @@ static void callbackRecogResult(Recog *recog, void *data)
    int first;
    Sentence *s;
    RecogProcess *r;
-   static char str[MMDAGENT_MAXBUFLEN]; /* static buffer */
+   static char str[MMDAgent::MAXBUFLEN]; /* static buffer */
    Julius_Thread *j = (Julius_Thread *) data;
 
    /* get status */
@@ -221,7 +221,7 @@ void Julius_Thread::stopAndRelease()
 void Julius_Thread::run()
 {
    char *tmp;
-   char buff[MMDAGENT_MAXBUFLEN];
+   char buff[MMDAgent::MAXBUFLEN];
    FILE *fp;
 
    if(m_jconf != NULL || m_recog != NULL || m_mmdagent == NULL || m_thread < 0 || m_languageModel == 0 || m_dictionary == 0 || m_triphoneAcousticModel == 0 || m_triphoneList == 0 || m_configFile == 0)

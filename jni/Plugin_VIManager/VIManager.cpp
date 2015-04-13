@@ -162,8 +162,8 @@ static int countArgs(const char *str, char separator)
 void InputArguments_initialize(InputArguments *ia, const char *str)
 {
    int i, j, idx1, idx2;
-   char buff1[MMDAGENT_MAXBUFLEN];
-   char buff2[MMDAGENT_MAXBUFLEN];
+   char buff1[MMDAgent::MAXBUFLEN];
+   char buff2[MMDAgent::MAXBUFLEN];
 
    /* get number of arguments */
    ia->size = countArgs(str, VIMANAGER_SEPARATOR1);
@@ -343,10 +343,10 @@ static void VIManager_SList_addArc(VIManager_SList *l, int index_s1, int index_s
    VIManager_Arc *a1, *a2;
    VIManager_AList *arc_list;
 
-   char itype[MMDAGENT_MAXBUFLEN];
-   char iargs[MMDAGENT_MAXBUFLEN];
-   char otype[MMDAGENT_MAXBUFLEN];
-   char oargs[MMDAGENT_MAXBUFLEN];
+   char itype[MMDAgent::MAXBUFLEN];
+   char iargs[MMDAgent::MAXBUFLEN];
+   char otype[MMDAgent::MAXBUFLEN];
+   char oargs[MMDAgent::MAXBUFLEN];
 
    s1 = VIManager_SList_searchState(l, index_s1);
    s2 = VIManager_SList_searchState(l, index_s2);
@@ -545,7 +545,7 @@ void VIManager::substituteVariableAndCopy(const char *input, char *output)
 /* VIManager::checkStringMatch: check if vstr with variables matches the string */
 bool VIManager::checkStringMatch(const char *vstr, const char *str)
 {
-   char buf[MMDAGENT_MAXBUFLEN];
+   char buf[MMDAgent::MAXBUFLEN];
 
    if (vstr == NULL || str == NULL)
       return false;
@@ -597,10 +597,10 @@ bool VIManager::assignVariableByEquation(const char *va)
    int idx1, idx2;
    int s, len;
    char tok[2];
-   char buff[MMDAGENT_MAXBUFLEN];
-   char buffn[MMDAGENT_MAXBUFLEN];
-   char buffv[MMDAGENT_MAXBUFLEN];
-   char buffvr[MMDAGENT_MAXBUFLEN];
+   char buff[MMDAgent::MAXBUFLEN];
+   char buffn[MMDAgent::MAXBUFLEN];
+   char buffv[MMDAgent::MAXBUFLEN];
+   char buffvr[MMDAgent::MAXBUFLEN];
 
    if (MMDAgent_strlen(va) == 0)
       return true;
@@ -648,16 +648,16 @@ VIManager::~VIManager()
 bool VIManager::load(const char *file)
 {
    FILE *fp;
-   char buff[MMDAGENT_MAXBUFLEN];
+   char buff[MMDAgent::MAXBUFLEN];
    int len;
    int idx;
 
-   char buff_s1[MMDAGENT_MAXBUFLEN];
-   char buff_s2[MMDAGENT_MAXBUFLEN];
-   char buff_is[MMDAGENT_MAXBUFLEN];
-   char buff_os[MMDAGENT_MAXBUFLEN];
-   char buff_vs[MMDAGENT_MAXBUFLEN];
-   char buff_er[MMDAGENT_MAXBUFLEN];
+   char buff_s1[MMDAgent::MAXBUFLEN];
+   char buff_s2[MMDAgent::MAXBUFLEN];
+   char buff_is[MMDAgent::MAXBUFLEN];
+   char buff_os[MMDAgent::MAXBUFLEN];
+   char buff_vs[MMDAgent::MAXBUFLEN];
+   char buff_er[MMDAgent::MAXBUFLEN];
    int size_s1;
    int size_s2;
    int size_is;
@@ -678,7 +678,7 @@ bool VIManager::load(const char *file)
    VIManager_SList_clear(&m_stateList);
    VIManager_SList_initialize(&m_stateList);
 
-   while (fgets(buff, MMDAGENT_MAXBUFLEN - 3, fp) != NULL) { /* string + \r + \n + \0 */
+   while (fgets(buff, MMDAgent::MAXBUFLEN - 3, fp) != NULL) { /* string + \r + \n + \0 */
       /* remove final \n and \r */
       len = MMDAgent_strlen(buff);
       while (len > 0 && (buff[len - 1] == '\n' || buff[len - 1] == '\r'))

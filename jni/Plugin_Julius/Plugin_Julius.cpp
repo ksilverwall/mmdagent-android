@@ -82,13 +82,13 @@ static bool enable;
 EXPORT void extAppStart(MMDAgent *mmdagent)
 {
    int len;
-   char languageModel[MMDAGENT_MAXBUFLEN];
-   char dictionary[MMDAGENT_MAXBUFLEN];
-   char triphoneAcousticModel[MMDAGENT_MAXBUFLEN];
-   char triphoneList[MMDAGENT_MAXBUFLEN];
-   char monophoneAcousticModel[MMDAGENT_MAXBUFLEN];
-   char configFile[MMDAGENT_MAXBUFLEN];
-   char userDictionary[MMDAGENT_MAXBUFLEN];
+   char languageModel[MMDAgent::MAXBUFLEN];
+   char dictionary[MMDAgent::MAXBUFLEN];
+   char triphoneAcousticModel[MMDAgent::MAXBUFLEN];
+   char triphoneList[MMDAgent::MAXBUFLEN];
+   char monophoneAcousticModel[MMDAgent::MAXBUFLEN];
+   char configFile[MMDAgent::MAXBUFLEN];
+   char userDictionary[MMDAgent::MAXBUFLEN];
 
    /* set model file names */
    sprintf(languageModel, PLUGINJULIUS_LANGUAGEMODEL(mmdagent->getAppDirName()));

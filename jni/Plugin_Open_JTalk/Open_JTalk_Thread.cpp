@@ -156,7 +156,7 @@ Open_JTalk_Thread::~Open_JTalk_Thread()
 bool Open_JTalk_Thread::loadAndStart(MMDAgent *mmdagent, const char *dicDir, const char *config)
 {
    int i, j, k;
-   char buff[MMDAGENT_MAXBUFLEN];
+   char buff[MMDAgent::MAXBUFLEN];
    FILE *fp;
    bool err = false;
    double *weights;
@@ -265,7 +265,7 @@ void Open_JTalk_Thread::stopAndRelease()
 /* Open_JTalk_Thread::run: main thread loop for TTS */
 void Open_JTalk_Thread::run()
 {
-   char lip[MMDAGENT_MAXBUFLEN];
+   char lip[MMDAgent::MAXBUFLEN];
    char *chara, *style, *text;
    int index;
 

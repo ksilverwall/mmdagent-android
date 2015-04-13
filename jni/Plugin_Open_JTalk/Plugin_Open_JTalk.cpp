@@ -84,7 +84,7 @@ static bool enable;
 EXPORT void extAppStart(MMDAgent *mmdagent)
 {
    int len;
-   char dic[MMDAGENT_MAXBUFLEN];
+   char dic[MMDAgent::MAXBUFLEN];
    char *config;
 
    /* get dictionary directory name */

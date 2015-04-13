@@ -105,7 +105,7 @@ bool VIManager_Logger::setTransition(VIManager_Arc *arc)
 void VIManager_Logger::drawArc(unsigned int from, VIManager_Arc *arc)
 {
    int i, j;
-   static char buf1[MMDAGENT_MAXBUFLEN], buf2[MMDAGENT_MAXBUFLEN]; /* static buffer */
+   static char buf1[MMDAgent::MAXBUFLEN], buf2[MMDAgent::MAXBUFLEN]; /* static buffer */
 
    strcpy(buf1, arc->input_event_type);
    for(i = 0; i < arc->input_event_args.size; i++) {
@@ -126,7 +126,7 @@ void VIManager_Logger::drawArc(unsigned int from, VIManager_Arc *arc)
 /* VIManager_Logger::drawVariable: render variable */
 void VIManager_Logger::drawVariable(VIManager_Variable *v)
 {
-   static char buf[MMDAGENT_MAXBUFLEN]; /* static buffer */
+   static char buf[MMDAgent::MAXBUFLEN]; /* static buffer */
 
    sprintf(buf, "$%s=%s", v->name, v->value);
    m_mmdagent->drawString(buf);

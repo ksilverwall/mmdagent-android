@@ -204,7 +204,7 @@ VIManager_Thread::~VIManager_Thread()
 void VIManager_Thread::loadAndStart(MMDAgent *mmdagent, const char *file)
 {
    DIRECTORY *dp;
-   char buf[MMDAGENT_MAXBUFLEN];
+   char buf[MMDAgent::MAXBUFLEN];
    char *dir, *fst;
    VIManager_Link *l, *last = NULL;
 
@@ -268,10 +268,10 @@ void VIManager_Thread::stopAndRelease()
 /* VIManager_Thread::run: main loop */
 void VIManager_Thread::run()
 {
-   char itype[MMDAGENT_MAXBUFLEN];
-   char iargs[MMDAGENT_MAXBUFLEN];
-   char otype[MMDAGENT_MAXBUFLEN];
-   char oargs[MMDAGENT_MAXBUFLEN];
+   char itype[MMDAgent::MAXBUFLEN];
+   char iargs[MMDAgent::MAXBUFLEN];
+   char otype[MMDAgent::MAXBUFLEN];
+   char oargs[MMDAgent::MAXBUFLEN];
    InputArguments ia;
    VIManager_Link *l;
 
