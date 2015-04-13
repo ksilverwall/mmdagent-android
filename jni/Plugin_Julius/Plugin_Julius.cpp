@@ -124,15 +124,15 @@ EXPORT void extProcMessage(MMDAgent *mmdagent, const char *type, const char *arg
       if(MMDAgent_strequal(args, PLUGINJULIUS_NAME) && enable == true) {
          julius_thread.pause();
          enable = false;
-         mmdagent->sendMessage(MMDAGENT_EVENT_PLUGINDISABLE, "%s", PLUGINJULIUS_NAME);
+         mmdagent->sendMessage(MMDAgent::Event::PLUGINDISABLE.c_str(), "%s", PLUGINJULIUS_NAME);
       }
    } else if(MMDAgent_strequal(type, MMDAgent::Command::PLUGINENABLE.c_str())) {
       if(MMDAgent_strequal(args, PLUGINJULIUS_NAME) && enable == false) {
          julius_thread.resume();
          enable = true;
-         mmdagent->sendMessage(MMDAGENT_EVENT_PLUGINENABLE, "%s", PLUGINJULIUS_NAME);
+         mmdagent->sendMessage(MMDAgent::Event::PLUGINENABLE.c_str(), "%s", PLUGINJULIUS_NAME);
       }
-   } else if(MMDAgent_strequal(type, MMDAGENT_EVENT_KEY)) {
+   } else if(MMDAgent_strequal(type, MMDAgent::Event::KEY.c_str())) {
       if (MMDAgent_strequal(args, "J")) {
          if (julius_thread.getLogActiveFlag() == true)
             if (julius_thread.getLogFlagForFixedLocationInWindow() == true)

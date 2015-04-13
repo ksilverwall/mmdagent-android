@@ -74,7 +74,7 @@ EXPORT void extAppStart(MMDAgent *mmdagent)
    countdown_thread.setupAndStart(mmdagent);
 
    enable = true;
-   mmdagent->sendMessage(MMDAGENT_EVENT_PLUGINENABLE, "%s", PLUGINVARIABLES_NAME);
+   mmdagent->sendMessage(MMDAgent::Event::PLUGINENABLE.c_str(), "%s", PLUGINVARIABLES_NAME);
 }
 
 /* extProcMessage: process message */
@@ -86,7 +86,7 @@ EXPORT void extProcMessage(MMDAgent *mmdagent, const char *type, const char *arg
       if(MMDAgent_strequal(type, MMDAgent::Command::PLUGINDISABLE.c_str())) {
          if(MMDAgent_strequal(args, PLUGINVARIABLES_NAME)) {
             enable = false;
-            mmdagent->sendMessage(MMDAGENT_EVENT_PLUGINDISABLE, "%s", PLUGINVARIABLES_NAME);
+            mmdagent->sendMessage(MMDAgent::Event::PLUGINDISABLE.c_str(), "%s", PLUGINVARIABLES_NAME);
          }
       } else if (MMDAgent_strequal(type, PLUGINVARIABLES_VALUESETCOMMAND)) {
          /* VALUE_SET command */
@@ -128,7 +128,7 @@ EXPORT void extProcMessage(MMDAgent *mmdagent, const char *type, const char *arg
       if(MMDAgent_strequal(type, MMDAgent::Command::PLUGINENABLE.c_str())) {
          if(MMDAgent_strequal(args, PLUGINVARIABLES_NAME)) {
             enable = true;
-            mmdagent->sendMessage(MMDAGENT_EVENT_PLUGINENABLE, "%s", PLUGINVARIABLES_NAME);
+            mmdagent->sendMessage(MMDAgent::Event::PLUGINENABLE.c_str(), "%s", PLUGINVARIABLES_NAME);
          }
       }
    }

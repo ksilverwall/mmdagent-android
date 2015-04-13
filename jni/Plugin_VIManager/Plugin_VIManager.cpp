@@ -85,7 +85,7 @@ EXPORT void extAppStart(MMDAgent *mmdagent)
 
    enable = true;
    enable_log = false;
-   mmdagent->sendMessage(MMDAGENT_EVENT_PLUGINENABLE, "%s", PLUGINVIMANAGER_NAME);
+   mmdagent->sendMessage(MMDAgent::Event::PLUGINENABLE.c_str(), "%s", PLUGINVIMANAGER_NAME);
 }
 
 /* extProcMessage: process message */
@@ -95,14 +95,14 @@ EXPORT void extProcMessage(MMDAgent *mmdagent, const char *type, const char *arg
       if(MMDAgent_strequal(type, MMDAgent::Command::PLUGINDISABLE.c_str())) {
          if(MMDAgent_strequal(args, PLUGINVIMANAGER_NAME)) {
             enable = false;
-            mmdagent->sendMessage(MMDAGENT_EVENT_PLUGINDISABLE, "%s", PLUGINVIMANAGER_NAME);
+            mmdagent->sendMessage(MMDAgent::Event::PLUGINDISABLE.c_str(), "%s", PLUGINVIMANAGER_NAME);
          }
       } else if (vimanager_thread.isRunning()) {
          if (type != NULL) {
             vimanager_thread.enqueueBuffer(type, args); /* enqueue */
          }
       }
-      if(MMDAgent_strequal(type, MMDAGENT_EVENT_KEY) && MMDAgent_strequal(args, "F")) {
+      if(MMDAgent_strequal(type, MMDAgent::Event::KEY.c_str()) && MMDAgent_strequal(args, "F")) {
          if(enable_log == true)
             enable_log = false;
          else
@@ -112,7 +112,7 @@ EXPORT void extProcMessage(MMDAgent *mmdagent, const char *type, const char *arg
       if(MMDAgent_strequal(type, MMDAgent::Command::PLUGINENABLE.c_str())) {
          if(MMDAgent_strequal(args, PLUGINVIMANAGER_NAME)) {
             enable = true;
-            mmdagent->sendMessage(MMDAGENT_EVENT_PLUGINENABLE, "%s", PLUGINVIMANAGER_NAME);
+            mmdagent->sendMessage(MMDAgent::Event::PLUGINENABLE.c_str(), "%s", PLUGINVIMANAGER_NAME);
          }
       }
    }
