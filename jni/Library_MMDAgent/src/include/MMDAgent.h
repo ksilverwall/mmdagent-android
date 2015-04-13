@@ -44,9 +44,7 @@
 
 /* definitions */
 
-#define MMDAGENT_MAXBUFLEN    MMDFILES_MAXBUFLEN
 #define MMDAGENT_DIRSEPARATOR MMDFILES_DIRSEPARATOR
-#define MMDAGENT_MAXNCOMMAND  10
 
 #ifdef MMDAGENT_OVERWRITEEXEFILE
 #define MMDAGENT_EXEFILE(binaryFileName) "%s", MMDAGENT_OVERWRITEEXEFILE
@@ -193,6 +191,8 @@ private:
 
 public:
 
+   static const unsigned int MAXBUFLEN   = MMDFILES_MAXBUFLEN;
+   static const unsigned int MAXNCOMMAND = 10;
    struct Command {
       static const std::string MODELADD;
       static const std::string MODELCHANGE;

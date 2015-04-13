@@ -144,7 +144,7 @@ Plugin::~Plugin()
 bool Plugin::load(const char *dir)
 {
    DIRECTORY *dp;
-   char buf[MMDAGENT_MAXBUFLEN];
+   char buf[MMDAgent::MAXBUFLEN];
    bool ret = false;
    DLLibrary *d;
 

@@ -1036,7 +1036,7 @@ bool MMDAgent::setup(int argc, char **argv, const char *title)
 {
    int i;
    size_t len;
-   char buff[MMDAGENT_MAXBUFLEN];
+   char buff[MAXBUFLEN];
 
    char *binaryFileName;
    char *binaryDirName;
@@ -1191,8 +1191,8 @@ bool MMDAgent::setup(int argc, char **argv, const char *title)
 /* MMDAgent::updateAndRender: update and render the whole scene */
 bool MMDAgent::updateAndRender()
 {
-   static char buf1[MMDAGENT_MAXBUFLEN];
-   static char buf2[MMDAGENT_MAXBUFLEN];
+   static char buf1[MAXBUFLEN];
+   static char buf2[MAXBUFLEN];
 
    if(m_enable == false)
       return false;
@@ -1369,7 +1369,7 @@ bool MMDAgent::renderScene()
    btVector3 pos;
    float fps;
 #ifndef MMDAGENT_DONTRENDERDEBUG
-   char buff[MMDAGENT_MAXBUFLEN];
+   char buff[MAXBUFLEN];
    static const GLfloat vertices[8][3] = {
       { -0.5f, -0.5f, 0.5f},
       { 0.5f, -0.5f, 0.5f},
@@ -1585,7 +1585,7 @@ void MMDAgent::resetAdjustmentTimer()
 void MMDAgent::sendMessage(const char * type, const char * format, ...)
 {
    va_list argv;
-   char buf[MMDAGENT_MAXBUFLEN];
+   char buf[MAXBUFLEN];
 
    if(m_enable == false)
       return;
@@ -1606,7 +1606,7 @@ void MMDAgent::sendMessage(const char * type, const char * format, ...)
 void MMDAgent::sendLogString(const char * format, ...)
 {
    va_list argv;
-   char buf[MMDAGENT_MAXBUFLEN];
+   char buf[MAXBUFLEN];
 
    if(m_enable == false)
       return;
@@ -2133,8 +2133,8 @@ void MMDAgent::procKeyMessage(char c)
 /* MMDAgent::procReceivedMessage: process received message */
 void MMDAgent::procReceivedMessage(const char *type, const char *value)
 {
-   static char buff[MMDAGENT_MAXBUFLEN];    /* static buffer */
-   static char *argv[MMDAGENT_MAXNCOMMAND];
+   static char buff[MAXBUFLEN];    /* static buffer */
+   static char *argv[MAXNCOMMAND];
    int num = 0;
 
    char *str1, *str2, *str3;
@@ -2158,10 +2158,10 @@ void MMDAgent::procReceivedMessage(const char *type, const char *value)
       m_logger->log("%s", type);
    } else {
       m_logger->log("%s|%s", type, value);
-      strncpy(buff, value, MMDAGENT_MAXBUFLEN - 1);
-      buff[MMDAGENT_MAXBUFLEN - 1] = '\0';
+      strncpy(buff, value, MAXBUFLEN - 1);
+      buff[MAXBUFLEN - 1] = '\0';
       for (str1 = MMDAgent_strtok(buff, "|", &str2); str1; str1 = MMDAgent_strtok(NULL, "|", &str2)) {
-         if (num >= MMDAGENT_MAXNCOMMAND) {
+         if (num >= MAXNCOMMAND) {
             m_logger->log("Error: %s: number of arguments exceed the limit.", type);
             break;
          }

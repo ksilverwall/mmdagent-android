@@ -134,7 +134,7 @@ void LogText::setup(TextRenderer *text, const int *size, const float *position, 
 void LogText::log(const char *format, ...)
 {
    char *p, *save;
-   char buff[MMDAGENT_MAXBUFLEN];
+   char buff[MMDAgent::MAXBUFLEN];
    va_list args;
 
    if (m_textList == NULL) return;
