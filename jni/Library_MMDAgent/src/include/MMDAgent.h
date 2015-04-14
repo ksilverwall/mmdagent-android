@@ -43,7 +43,6 @@
 #define __mmdagent_h__
 
 /* definitions */
-
 #ifdef MMDAGENT_OVERWRITEEXEFILE
 #define MMDAGENT_EXEFILE(binaryFileName) "%s", MMDAGENT_OVERWRITEEXEFILE
 #else
@@ -238,10 +237,16 @@ public:
       static const std::string KEY;
    };
 
+   enum ErrCode {
+      SUCCESS,
+      ILLEGAL_ARGUMENT,
+      UNKNOWN_ERR,
+   };
+
    MMDAgent();
    ~MMDAgent();
 
-   bool setup(int argc, char **argv, const char *title);
+   ErrCode setup(int argc, char **argv, const char *title);
    bool updateAndRender();
    void drawString(const char *str);
    void resetAdjustmentTimer();

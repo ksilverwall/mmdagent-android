@@ -1031,8 +1031,8 @@ MMDAgent::~MMDAgent()
    clear();
 }
 
-/* MMDAgent::setup: initialize and setup MMDAgent */
-bool MMDAgent::setup(int argc, char **argv, const char *title)
+// TODO: what args needed? chenge interface
+MMDAgent::ErrCode MMDAgent::setup(int argc, char **argv, const char *title)
 {
    int i;
    size_t len;
@@ -1041,12 +1041,17 @@ bool MMDAgent::setup(int argc, char **argv, const char *title)
    char *binaryFileName;
    char *binaryDirName;
 
-   if(argc < 1 || MMDAgent_strlen(argv[0]) <= 0)
-      return false;
+   if(argc < 1)
+      return ILLEGAL_ARGUMENT;
+   if(!argv)
+      return ILLEGAL_ARGUMENT;
+   if(!argv[0])
+      return ILLEGAL_ARGUMENT;
+   if(strlen(argv[0]) <= 0)
+      return ILLEGAL_ARGUMENT;
 
    clear();
 
-   /* get binary file name and its directory name */
    sprintf(buff, MMDAGENT_EXEFILE(argv[0]));
    binaryFileName = MMDAgent_strdup(buff);
    binaryDirName = MMDAgent_dirname(buff);
@@ -1097,7 +1102,7 @@ bool MMDAgent::setup(int argc, char **argv, const char *title)
    m_screen = new ScreenWindow();
    if(m_screen->setup(m_option->getWindowSize(), title, m_option->getMaxMultiSampling()) == false) {
       clear();
-      return false;
+      return UNKNOWN_ERR;
    }
 
    /* initialize message queue */
@@ -1121,7 +1126,7 @@ bool MMDAgent::setup(int argc, char **argv, const char *title)
    m_systex = new SystemTexture();
    if (m_systex->load(m_appDirName) == false) {
       clear();
-      return 0;
+      return UNKNOWN_ERR;
    }
 
    /* setup lipsync */
@@ -1129,14 +1134,14 @@ bool MMDAgent::setup(int argc, char **argv, const char *title)
    sprintf(buff, "%s%c%s", m_appDirName, DIRSEPARATOR, LIPSYNC_CONFIGFILE);
    if (m_lipSync->load(buff) == false) {
       clear();
-      return 0;
+      return UNKNOWN_ERR;
    }
 
    /* setup render */
    m_render = new Render();
    if (m_render->setup(m_option->getWindowSize(), m_option->getCampusColor(), m_option->getCameraTransition(), m_option->getCameraRotation(), m_option->getCameraDistance(), m_option->getCameraFovy(), m_option->getUseShadowMapping(), m_option->getShadowMappingTextureSize(), m_option->getShadowMappingLightFirst(), m_option->getMaxNumModel()) == false) {
       clear();
-      return 0;
+      return UNKNOWN_ERR;
    }
 
    /* setup timer */
@@ -1181,11 +1186,11 @@ bool MMDAgent::setup(int argc, char **argv, const char *title)
 
    if(MMDAgent_chdir(m_configDirName) == false) {
       clear();
-      return false;
+      return UNKNOWN_ERR;
    }
 
    m_plugin->execAppStart(this);
-   return true;
+   return SUCCESS;
 }
 
 /* MMDAgent::updateAndRender: update and render the whole scene */

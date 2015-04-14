@@ -349,7 +349,7 @@ int commonMain(int argc, char **argv)
 
    /* create MMDAgent window */
    mmdagent = new MMDAgent();
-   if(mmdagent->setup(argc, argv, MAIN_TITLE) == false) {
+   if(mmdagent->setup(argc, argv, MAIN_TITLE) != MMDAgent::SUCCESS) {
       __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "fail to setup MMDAagent");
       delete mmdagent;
       glfwTerminate();
