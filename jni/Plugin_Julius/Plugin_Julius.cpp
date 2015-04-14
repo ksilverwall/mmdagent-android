@@ -50,21 +50,21 @@
 #define PLUGINJULIUS_NAME          "Julius"
 #define PLUGINJULIUS_MODIFYCOMMAND "RECOG_MODIFY"
 
-#define PLUGINJULIUS_LANGUAGEMODEL(appDirName)          "%s%c%s%c%s%c%s", appDirName, MMDAGENT_DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAGENT_DIRSEPARATOR, "lang_m", MMDAGENT_DIRSEPARATOR, "web.60k.8-8.bingramv5.gz"
-#define PLUGINJULIUS_DICTIONARY(appDirName)             "%s%c%s%c%s%c%s", appDirName, MMDAGENT_DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAGENT_DIRSEPARATOR, "lang_m", MMDAGENT_DIRSEPARATOR, "web.60k.htkdic"
+#define PLUGINJULIUS_LANGUAGEMODEL(appDirName)          "%s%c%s%c%s%c%s", appDirName, MMDAgent::DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAgent::DIRSEPARATOR, "lang_m", MMDAgent::DIRSEPARATOR, "web.60k.8-8.bingramv5.gz"
+#define PLUGINJULIUS_DICTIONARY(appDirName)             "%s%c%s%c%s%c%s", appDirName, MMDAgent::DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAgent::DIRSEPARATOR, "lang_m", MMDAgent::DIRSEPARATOR, "web.60k.htkdic"
 #ifdef PLUGINJULIUS_USEPTM
-#define PLUGINJULIUS_TRIPHONEACOUSTICMODEL(appDirName)  "%s%c%s%c%s%c%s", appDirName, MMDAGENT_DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAGENT_DIRSEPARATOR, "phone_m", MMDAGENT_DIRSEPARATOR, "clustered.mmf.ptm.16mix.all.julius.binhmm"
-#define PLUGINJULIUS_TRIPHONELIST(appDirName)           "%s%c%s%c%s%c%s", appDirName, MMDAGENT_DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAGENT_DIRSEPARATOR, "phone_m", MMDAGENT_DIRSEPARATOR, "tri_tied.list.ptm.bin"
+#define PLUGINJULIUS_TRIPHONEACOUSTICMODEL(appDirName)  "%s%c%s%c%s%c%s", appDirName, MMDAgent::DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAgent::DIRSEPARATOR, "phone_m", MMDAgent::DIRSEPARATOR, "clustered.mmf.ptm.16mix.all.julius.binhmm"
+#define PLUGINJULIUS_TRIPHONELIST(appDirName)           "%s%c%s%c%s%c%s", appDirName, MMDAgent::DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAgent::DIRSEPARATOR, "phone_m", MMDAgent::DIRSEPARATOR, "tri_tied.list.ptm.bin"
 #else
-#define PLUGINJULIUS_TRIPHONEACOUSTICMODEL(appDirName)  "%s%c%s%c%s%c%s", appDirName, MMDAGENT_DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAGENT_DIRSEPARATOR, "phone_m", MMDAGENT_DIRSEPARATOR, "clustered.mmf.16mix.all.julius.binhmm"
-#define PLUGINJULIUS_TRIPHONELIST(appDirName)           "%s%c%s%c%s%c%s", appDirName, MMDAGENT_DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAGENT_DIRSEPARATOR, "phone_m", MMDAGENT_DIRSEPARATOR, "tri_tied.list.bin"
+#define PLUGINJULIUS_TRIPHONEACOUSTICMODEL(appDirName)  "%s%c%s%c%s%c%s", appDirName, MMDAgent::DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAgent::DIRSEPARATOR, "phone_m", MMDAgent::DIRSEPARATOR, "clustered.mmf.16mix.all.julius.binhmm"
+#define PLUGINJULIUS_TRIPHONELIST(appDirName)           "%s%c%s%c%s%c%s", appDirName, MMDAgent::DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAgent::DIRSEPARATOR, "phone_m", MMDAgent::DIRSEPARATOR, "tri_tied.list.bin"
 #endif /* PLUGINJULIUS_USEPTM */
 #ifdef PLUGINJULIUS_USEGMS
-#define PLUGINJULIUS_MONOPHONEACOUSTICMODEL(appDirName) "%s%c%s%c%s%c%s", appDirName, MMDAGENT_DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAGENT_DIRSEPARATOR, "phone_m", MMDAGENT_DIRSEPARATOR, "monophone.mmf.16mix.julius.gshmm"
+#define PLUGINJULIUS_MONOPHONEACOUSTICMODEL(appDirName) "%s%c%s%c%s%c%s", appDirName, MMDAgent::DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAgent::DIRSEPARATOR, "phone_m", MMDAgent::DIRSEPARATOR, "monophone.mmf.16mix.julius.gshmm"
 #else
 #define PLUGINJULIUS_MONOPHONEACOUSTICMODEL(appDirName) ""
 #endif /* PLUGINJULIUS_USEGMS */
-#define PLUGINJULIUS_CONFIGFILE(appDirName)             "%s%c%s%c%s", appDirName, MMDAGENT_DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAGENT_DIRSEPARATOR, "jconf.txt"
+#define PLUGINJULIUS_CONFIGFILE(appDirName)             "%s%c%s%c%s", appDirName, MMDAgent::DIRSEPARATOR, PLUGINJULIUS_NAME, MMDAgent::DIRSEPARATOR, "jconf.txt"
 
 /* headers */
 

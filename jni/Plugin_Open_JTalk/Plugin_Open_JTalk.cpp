@@ -88,7 +88,7 @@ EXPORT void extAppStart(MMDAgent *mmdagent)
    char *config;
 
    /* get dictionary directory name */
-   sprintf(dic, "%s%c%s", mmdagent->getAppDirName(), MMDAGENT_DIRSEPARATOR, PLUGINOPENJTALK_NAME);
+   sprintf(dic, "%s%c%s", mmdagent->getAppDirName(), MMDAgent::DIRSEPARATOR, PLUGINOPENJTALK_NAME);
 
    /* get config file */
    config = MMDAgent_strdup(mmdagent->getConfigFileName());

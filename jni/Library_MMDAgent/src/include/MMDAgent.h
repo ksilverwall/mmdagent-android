@@ -59,13 +59,13 @@
 #ifdef MMDAGENT_OVERWRITESYSDATADIR
 #define MMDAGENT_SYSDATADIR(binaryDirName) "%s", MMDAGENT_OVERWRITESYSDATADIR
 #else
-#define MMDAGENT_SYSDATADIR(binaryDirName) "%s%c%s", binaryDirName, MMDAGENT_DIRSEPARATOR, "AppData"
+#define MMDAGENT_SYSDATADIR(binaryDirName) "%s%c%s", binaryDirName, MMDAgent::DIRSEPARATOR, "AppData"
 #endif /* MMDAGENT_OVERWRITESYSDATADIR */
 
 #ifdef MMDAGENT_OVERWRITEPLUGINDIR
 #define MMDAGENT_PLUGINDIR(binaryDirName) "%s", MMDAGENT_OVERWRITEPLUGINDIR
 #else
-#define MMDAGENT_PLUGINDIR(binaryDirName) "%s%c%s", binaryDirName, MMDAGENT_DIRSEPARATOR, "Plugins"
+#define MMDAGENT_PLUGINDIR(binaryDirName) "%s%c%s", binaryDirName, MMDAgent::DIRSEPARATOR, "Plugins"
 #endif /* MMDAGENT_OVERWRITEPLUGINDIR */
 
 /* headers */
